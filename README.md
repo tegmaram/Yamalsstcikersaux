@@ -48,7 +48,7 @@ Alle angebotenen Aufkleber sind einzeln, mehrfach oder im Set erhältlich – **
 
 ## 2. Verkaufskonditionen & Treffpunkt Augsburg (Keine Lieferung)
 
-- **100 % Verhandlungsbasis (VB):** Auf der Website können Interessenten ihre gewünschten Motive und Stückzahlen anklicken, ihren **eigenen Wunschpreis (€ VB)** eintragen und die fertige Anfrage direkt kopieren oder in WhatsApp öffnen.
+- **100 % Verhandlungsbasis (VB):** Auf der Website können Interessenten ihre gewünschten Motive bequem per **Schnellauswahl (`−30`, `−10`, `−1` sowie `+1`, `+10`, `+30`)** anklicken, ihren **eigenen Wunschpreis (€ VB)** eintragen und die fertige Anfrage direkt kopieren oder in WhatsApp öffnen.
 - **Nur Treffpunkt in Augsburg:** Persönliche Direktübergabe vor Ort in Augsburg – z. B. an **FCA-Heimspieltagen an der Arena**, in der **Augsburger Innenstadt / Königsplatz**, am **Augsburger Hauptbahnhof** oder nach kurzer Absprache in Augsburg.
 - **Keine Lieferung / Kein Versand:** Es erfolgt ausschließlich eine persönliche Übergabe am Treffpunkt in Augsburg (kein Postversand, keine Lieferung).
 - **Tausch:** Tauschangebote gegen andere Augsburg- / FCA-Sticker beim Treffen in Augsburg sind jederzeit willkommen.
