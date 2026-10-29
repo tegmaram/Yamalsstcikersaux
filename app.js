@@ -241,7 +241,7 @@ function buildInquiryMessage() {
     ? `Mein Preisvorschlag: ${rawPrice} € (VB)`
     : 'Mein Preisvorschlag: bitte um kurzen Preisvorschlag (VB)';
 
-  const deliveryLine = `Übergabe / Versand: ${els.offerDelivery.value}`;
+  const deliveryLine = `Treffpunkt: ${els.offerDelivery.value} (nur Abholung / keine Lieferung)`;
   const nameVal = els.buyerName.value.trim();
   const noteVal = els.offerNote.value.trim();
 

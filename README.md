@@ -9,7 +9,7 @@ Alle angebotenen Aufkleber sind einzeln, mehrfach oder im Set erhältlich – **
 ## Inhaltsverzeichnis
 
 1. [Verfügbare Original-Sticker (Preis VB)](#1-verfügbare-original-sticker-preis-vb)
-2. [Verkaufskonditionen, Übergabe in Augsburg & Versand](#2-verkaufskonditionen-übergabe-in-augsburg--versand)
+2. [Verkaufskonditionen & Treffpunkt Augsburg (Keine Lieferung)](#2-verkaufskonditionen--treffpunkt-augsburg-keine-lieferung)
 3. [Komplettes GitHub Pages Setup (Schritt-für-Schritt)](#3-komplettes-github-pages-setup-schritt-für-schritt)
 4. [Website lokal auf dem eigenen Rechner testen](#4-website-lokal-auf-dem-eigenen-rechner-testen)
 5. [Projektstruktur](#5-projektstruktur)
@@ -46,12 +46,12 @@ Alle angebotenen Aufkleber sind einzeln, mehrfach oder im Set erhältlich – **
 
 ---
 
-## 2. Verkaufskonditionen, Übergabe in Augsburg & Versand
+## 2. Verkaufskonditionen & Treffpunkt Augsburg (Keine Lieferung)
 
 - **100 % Verhandlungsbasis (VB):** Auf der Website können Interessenten ihre gewünschten Motive und Stückzahlen anklicken, ihren **eigenen Wunschpreis (€ VB)** eintragen und die fertige Anfrage direkt kopieren oder in WhatsApp öffnen.
-- **Abholung / Übergabe in Augsburg:** Direktübergabe ohne Versandkosten möglich – z. B. an **FCA-Heimspieltagen an der Arena**, in der **Augsburger Innenstadt / Königsplatz** oder am **Augsburger Hauptbahnhof**.
-- **Postversand:** Deutschlandweiter, knicksicherer Versand im Briefumschlag nach Absprache.
-- **Tausch:** Tauschangebote gegen andere Augsburg- / FCA-Sticker sind jederzeit willkommen.
+- **Nur Treffpunkt in Augsburg:** Persönliche Direktübergabe vor Ort in Augsburg – z. B. an **FCA-Heimspieltagen an der Arena**, in der **Augsburger Innenstadt / Königsplatz**, am **Augsburger Hauptbahnhof** oder nach kurzer Absprache in Augsburg.
+- **Keine Lieferung / Kein Versand:** Es erfolgt ausschließlich eine persönliche Übergabe am Treffpunkt in Augsburg (kein Postversand, keine Lieferung).
+- **Tausch:** Tauschangebote gegen andere Augsburg- / FCA-Sticker beim Treffen in Augsburg sind jederzeit willkommen.
 
 ---
 
