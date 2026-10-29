@@ -2,276 +2,155 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yamal's Stickers AUX – Augsburg &amp; FCA Sticker-Verkauf (Preis VB)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0e0c" />
+  <title>Yamal's Stickers AUX | FCA &amp; Augsburg Sticker (VB)</title>
   <meta
     name="description"
-    content="Originale Augsburg &amp; FCA Szene- und Kurven-Sticker im Verkauf: Fuggerstadt, Ulrich-Biesinger-Tribüne, Gruppe Fuggerstadt, LA 07 &amp; LA. Alle Preise verhandelbar (VB)!"
+    content="FCA &amp; Augsburg Sticker – Preis verhandelbar (VB). Nur Treffpunkt Augsburg, keine Lieferung."
   />
   <link rel="stylesheet" href="./styles.css" />
 </head>
-<body>
-  <div class="rgw-bar" aria-hidden="true">
-    <span class="bar-red"></span>
-    <span class="bar-green"></span>
-    <span class="bar-white"></span>
+<body class="is-loading">
+  <!-- Animated Page Loader -->
+  <div id="page-loader" class="page-loader" aria-label="Seite lädt">
+    <div class="loader-inner">
+      <div class="loader-logo">AUX</div>
+      <div class="loader-title">Yamal's Stickers</div>
+      <div class="loader-track">
+        <div class="loader-bar"></div>
+      </div>
+      <div class="loader-sub">ROT • GRÜN • WEISS</div>
+    </div>
   </div>
 
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="#top" class="brand">
-        <span class="brand-badge">AUX</span>
-        <div class="brand-text">
-          <strong>Yamal's Stickers AUX</strong>
-          <span>Augsburg • FCA • Rot-Grün-Weiß</span>
-        </div>
-      </a>
+  <!-- Top Rot-Grün-Weiß Line -->
+  <div class="rgw-line" aria-hidden="true">
+    <span class="c-red"></span>
+    <span class="c-green"></span>
+    <span class="c-white"></span>
+  </div>
 
-      <nav class="nav-links" aria-label="Navigation">
-        <a href="#sticker">Sticker-Motive (5)</a>
-        <a href="#uebergabe">Treffpunkt Augsburg</a>
-        <a href="#anfrage" class="nav-cta">
-          Preisvorschlag (VB)
-          <span id="nav-count" class="nav-count" hidden>0</span>
-        </a>
-      </nav>
+  <!-- Compact Header -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="#top" class="brand">
+        <span class="brand-icon">AUX</span>
+        <strong>Yamal's Stickers</strong>
+      </a>
+      <a href="#anfrage" class="top-cta">
+        Anfrage
+        <span id="top-count" class="count-pill" hidden>0</span>
+      </a>
     </div>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <span class="hero-kicker">AUGSBURG (0821 / AUX) • ORIGINALFOTOS • KEINE PLATZHALTER</span>
-          <h1>Augsburg &amp; FCA Sticker-Verkauf – <span class="rgw-highlight">Preis verhandelbar</span></h1>
-          <p class="hero-desc">
-            Originale Aufkleber aus der Fuggerstadt für Kurve, Stadion, Auswärtsfahrt und Sammler.
-            Einzeln, mehrfach oder als gemischtes Set erhältlich –
-            <strong>jeder Preis ist frei verhandelbar (VB)!</strong>
-          </p>
-
-          <div class="hero-highlights">
-            <div class="highlight-box">
-              <strong>Preis 100 % VB</strong>
-              <span>Mach einfach dein faires Angebot</span>
-            </div>
-            <div class="highlight-box">
-              <strong>Einzeln &amp; im Set</strong>
-              <span>Freie Motiv- &amp; Mengenwahl</span>
-            </div>
-            <div class="highlight-box">
-              <strong>Nur Treffpunkt AUX</strong>
-              <span>Übergabe in Augsburg • keine Lieferung</span>
-            </div>
-          </div>
-
-          <div class="hero-buttons">
-            <a href="#sticker" class="btn btn-primary">Sticker ansehen &amp; auswählen</a>
-            <button type="button" id="select-all-hero" class="btn btn-secondary">
-              Alle 5 Motive als Set wählen
-            </button>
-          </div>
-        </div>
-
-        <div class="hero-photo-stack" aria-label="Echte Fotos der angebotenen Sticker">
-          <img
-            src="./assets/stickers/ulrich-biesinger-tribuene.jpg"
-            alt="Sticker Ulrich-Biesinger-Tribüne – Es geht nur gemeinsam"
-            class="stack-img stack-1"
-            data-lightbox="./assets/stickers/ulrich-biesinger-tribuene.jpg"
-          />
-          <img
-            src="./assets/stickers/fuggerstadt-wappen.jpg"
-            alt="Sticker Fuggerstadt mit Augsburger Stadtwappen"
-            class="stack-img stack-2"
-            data-lightbox="./assets/stickers/fuggerstadt-wappen.jpg"
-          />
-          <img
-            src="./assets/stickers/la-07-adler.jpg"
-            alt="Sticker LA 07 mit Doppeladler"
-            class="stack-img stack-3"
-            data-lightbox="./assets/stickers/la-07-adler.jpg"
-          />
-        </div>
+  <main id="top" class="wrap main-content">
+    <!-- Minimal Hero -->
+    <section class="intro reveal">
+      <h1>Augsburg &amp; FCA Sticker</h1>
+      <div class="tag-row">
+        <span class="info-chip chip-vb">Preis VB</span>
+        <span class="info-chip">Treffpunkt Augsburg</span>
+        <span class="info-chip chip-no">Keine Lieferung</span>
       </div>
     </section>
 
-    <section id="sticker" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <span class="section-tag">AKTUELLER BESTAND • ORIGINALAUFNAHMEN</span>
-            <h2>Verfügbare Sticker</h2>
-          </div>
-          <p class="section-sub">
-            Klicke auf ein Foto für die Großansicht oder wähle direkt deine gewünschte Stückzahl für deinen
-            <strong>unverbindlichen Preisvorschlag (VB)</strong>.
-          </p>
-        </div>
-
-        <div id="sticker-grid" class="sticker-grid">
-          <!-- Wird aus den 5 Original-Stickern in app.js aufgebaut -->
-        </div>
+    <!-- Quick Bulk Bar -->
+    <section class="bulk-strip reveal" aria-label="Schnellauswahl alle Motive">
+      <span class="bulk-label">Alle 5 Motive:</span>
+      <div class="bulk-btns">
+        <button type="button" class="chip-btn bulk-add-btn" data-bulk-step="1">+1</button>
+        <button type="button" class="chip-btn bulk-add-btn" data-bulk-step="10">+10</button>
+        <button type="button" class="chip-btn bulk-add-btn" data-bulk-step="30">+30</button>
+        <button type="button" id="clear-top-btn" class="chip-btn chip-reset" hidden>Reset</button>
       </div>
     </section>
 
-    <section id="uebergabe" class="section section-alt">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <span class="section-tag">NUR ABHOLUNG / DIREKTÜBERGABE • KEINE LIEFERUNG</span>
-            <h2>Treffpunkt Augsburg &amp; Konditionen</h2>
-          </div>
-        </div>
-
-        <div class="info-grid">
-          <div class="info-card">
-            <h3>Treffpunkt in Augsburg</h3>
-            <p>
-              Unkomplizierte Direktübergabe in Augsburg – z.&nbsp;B. an
-              <strong>FCA-Heimspieltagen an der Arena</strong>, am <strong>Königsplatz / Innenstadt</strong>,
-              am <strong>Augsburger Hauptbahnhof</strong> oder an einem anderen Treffpunkt in Augsburg nach kurzer Absprache.
-            </p>
-          </div>
-
-          <div class="info-card">
-            <h3>Keine Lieferung / Kein Versand</h3>
-            <p>
-              Der Verkauf erfolgt <strong>ausschließlich per persönlichem Treffpunkt in Augsburg</strong>.
-              Es wird <strong>keine Lieferung und kein Postversand</strong> angeboten.
-            </p>
-          </div>
-
-          <div class="info-card">
-            <h3>Preis verhandelbar (VB) &amp; Tausch</h3>
-            <p>
-              Es gibt keine starren Festpreise. Egal ob einzelne Kleber oder größeres Paket:
-              Schlag einfach deinen <strong>Wunschpreis (VB)</strong> vor. Auch Tausch direkt beim Treffen
-              in Augsburg nach Absprache möglich!
-            </p>
-          </div>
-        </div>
-      </div>
+    <!-- 5 Real Stickers -->
+    <section id="sticker" class="sticker-list" aria-label="Verfügbare Sticker">
+      <!-- Rendered by app.js -->
     </section>
 
-    <section id="anfrage" class="section">
-      <div class="container inquiry-grid">
-        <div class="selection-panel">
-          <span class="section-tag">DEINE MERKLISTE</span>
-          <h2>Ausgewählte Sticker</h2>
-          <p class="muted">
-            Wähle oben die gewünschten Motive aus oder stelle dir mit einem Klick das komplette 5er-Set zusammen.
-          </p>
-
-          <div id="selected-list" class="selected-list"></div>
-
-          <div class="quick-actions">
-            <button type="button" class="btn btn-secondary btn-sm bulk-add-btn" data-bulk-step="1">
-              Alle 5 Motive +1
-            </button>
-            <button type="button" class="btn btn-secondary btn-sm bulk-add-btn" data-bulk-step="10">
-              Alle 5 Motive +10
-            </button>
-            <button type="button" class="btn btn-secondary btn-sm bulk-add-btn" data-bulk-step="30">
-              Alle 5 Motive +30
-            </button>
-            <button type="button" id="clear-selection-btn" class="btn btn-ghost btn-sm">
-              Auswahl zurücksetzen
-            </button>
-          </div>
+    <!-- Simple Offer Box -->
+    <section id="anfrage" class="offer-section reveal">
+      <div class="offer-card">
+        <div class="offer-header">
+          <h2>Dein Angebot (VB)</h2>
+          <button type="button" id="clear-selection-btn" class="text-reset" hidden>Zurücksetzen</button>
         </div>
 
-        <div class="offer-card">
-          <h3>Preisvorschlag erstellen (VB)</h3>
-          <p class="muted">
-            Trage deinen Wunschpreis und deinen bevorzugten Treffpunkt in Augsburg ein
-            (<strong>nur Abholung / Treffpunkt – keine Lieferung</strong>). Deine fertige Anfrage wird direkt zum Kopieren
-            oder Weiterleiten erstellt.
-          </p>
+        <div id="selected-summary" class="selected-summary"></div>
 
-          <form id="offer-form" novalidate>
-            <div class="form-two">
-              <div class="field">
-                <label for="offer-price">Dein Preisvorschlag (€ VB) *</label>
-                <div class="price-field">
-                  <input
-                    type="text"
-                    id="offer-price"
-                    inputmode="decimal"
-                    placeholder="z. B. 10"
-                    required
-                  />
-                  <span>€ VB</span>
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="offer-delivery">Treffpunkt in Augsburg (keine Lieferung) *</label>
-                <select id="offer-delivery">
-                  <option value="Augsburg – Arena / Heimspieltag">Augsburg – Arena / Heimspieltag</option>
-                  <option value="Augsburg – Innenstadt / Königsplatz">Augsburg – Innenstadt / Königsplatz</option>
-                  <option value="Augsburg – Hauptbahnhof">Augsburg – Hauptbahnhof</option>
-                  <option value="Augsburg – Treffpunkt nach Absprache">Augsburg – Treffpunkt nach Absprache</option>
-                </select>
+        <form id="offer-form" novalidate>
+          <div class="field-grid">
+            <div class="field">
+              <label for="offer-price">Wunschpreis (€ VB)</label>
+              <div class="price-wrap">
+                <input
+                  type="text"
+                  id="offer-price"
+                  inputmode="decimal"
+                  placeholder="z. B. 15"
+                />
+                <span>€ VB</span>
               </div>
             </div>
 
             <div class="field">
-              <label for="buyer-name">Dein Name / Kontakt (optional)</label>
-              <input
-                type="text"
-                id="buyer-name"
-                placeholder="z. B. Name oder @Instagram / Handynummer"
-              />
+              <label for="offer-delivery">Treffpunkt Augsburg</label>
+              <select id="offer-delivery">
+                <option value="Arena / Heimspiel">Arena / Heimspiel</option>
+                <option value="Königsplatz / Stadt">Königsplatz / Stadt</option>
+                <option value="Augsburg Hbf">Augsburg Hbf</option>
+                <option value="Nach Absprache in AUX">Nach Absprache in AUX</option>
+              </select>
             </div>
+          </div>
 
-            <div class="field">
-              <label for="offer-note">Nachricht / Tauschangebot (optional)</label>
-              <textarea
-                id="offer-note"
-                rows="2"
-                placeholder="z. B. Hast du vom Fuggerstadt-Motiv noch mehr auf Lager? Oder Tausch möglich?"
-              ></textarea>
-            </div>
+          <div class="field">
+            <label for="offer-note">Notiz / Kontakt / Tausch (optional)</label>
+            <input
+              type="text"
+              id="offer-note"
+              placeholder="z. B. Samstag vorm Spiel, Tausch möglich?"
+            />
+          </div>
 
-            <div class="preview-box">
-              <div class="preview-head">
-                <strong>Fertiger Anfrage-Text:</strong>
-                <span id="copy-status" class="copy-status" hidden>Kopiert!</span>
-              </div>
-              <pre id="message-preview" class="message-preview"></pre>
-            </div>
+          <div class="preview-card">
+            <pre id="message-preview" class="message-preview"></pre>
+          </div>
 
-            <div class="offer-actions">
-              <button type="button" id="copy-btn" class="btn btn-primary">
-                Anfrage-Text kopieren
-              </button>
-              <a id="whatsapp-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-green">
-                In WhatsApp öffnen
-              </a>
-            </div>
-          </form>
-        </div>
+          <div class="action-stack">
+            <a id="whatsapp-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+              In WhatsApp senden
+            </a>
+            <button type="button" id="copy-btn" class="btn btn-copy">
+              Text kopieren
+            </button>
+          </div>
+        </form>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>
-        <strong>Yamal's Stickers AUX</strong> • Augsburg &amp; FCA Sticker-Verkauf • Treffpunkt Augsburg (keine Lieferung) • Preis VB
-      </div>
-      <div class="rgw-dots">
-        <span class="dot red"></span>
-        <span class="dot green"></span>
-        <span class="dot white"></span>
-        <span>Rot • Grün • Weiß</span>
-      </div>
-    </div>
+  <footer class="mini-footer">
+    <span>AUX • Rot-Grün-Weiß • Nur Treffpunkt Augsburg (keine Lieferung)</span>
   </footer>
 
-  <!-- Lightbox für Originalfotos -->
-  <div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Sticker Großansicht">
+  <!-- Sticky Mobile Bottom Bar when stickers are selected -->
+  <div id="sticky-bar" class="sticky-bar" hidden>
+    <div class="sticky-bar-inner">
+      <div class="sticky-info">
+        <strong id="sticky-count">0 Sticker</strong>
+        <span>Preis VB • Augsburg</span>
+      </div>
+      <a href="#anfrage" class="sticky-cta">Weiter →</a>
+    </div>
+  </div>
+
+  <!-- Fullscreen Photo Zoom -->
+  <div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Foto Großansicht">
     <button type="button" id="lightbox-close" class="lightbox-close" aria-label="Schließen">&times;</button>
     <img id="lightbox-img" src="" alt="" />
     <p id="lightbox-caption" class="lightbox-caption"></p>
