@@ -1,246 +1,152 @@
 # Yamal's Stickers AUX – Augsburg & FCA Sticker-Verkauf (Preis VB)
 
-Willkommen im offiziellen Repository von **Yamal's Stickers AUX** – deinem Sticker-Portal für **Augsburg (0821 / AUX)** und **FC Augsburg (Rot-Grün-Weiß)** Aufkleber.
+Offizielle **GitHub Pages Website** für den Verkauf von originalen **Augsburg (0821 / AUX)** & **FCA** Szene- und Kurven-Stickern in **Rot – Grün – Weiß**.
 
-Alle angebotenen Einzelmotive und gemischten Sticker-Pakete sind **komplett auf Verhandlungsbasis (VB)** erhältlich. Faire Szene-Preise, attraktiver Mengenrabatt für Fanclubs, Busfahrten & Freundeskreise sowie persönliche Übergabe direkt in Augsburg oder schneller Postversand.
+Alle angebotenen Aufkleber sind einzeln, mehrfach oder im Set erhältlich – **jeder Preis ist frei verhandelbar (VB)!** Keine Platzhalter, keine Demo-Artikel: Alle Bilder zeigen die echten, verfügbaren Sticker.
 
 ---
 
 ## Inhaltsverzeichnis
 
-1. [Über das Angebot & Preismodell (VB)](#1-über-das-angebot--preismodell-vb)
-2. [Aktuelle Sticker-Motive & Mix-Pakete](#2-aktuelle-sticker-motive--mix-pakete)
-3. [Abholpunkte (Depots) in Augsburg & Versand](#3-abholpunkte-depots-in-augsburg--versand)
-4. [Funktionen der Web-Anwendung](#4-funktionen-der-web-anwendung)
-5. [Komplettes Setup (Schritt-für-Schritt Anleitung)](#5-komplettes-setup-schritt-für-schritt-anleitung)
-6. [Projektstruktur im Detail](#6-projektstruktur-im-detail)
-7. [Sortiment, Preise & Depots anpassen](#7-sortiment-preise--depots-anpassen)
-8. [REST-API Dokumentation](#8-rest-api-dokumentation)
-9. [Tests & Qualitätssicherung](#9-tests--qualitätssicherung)
-10. [Deployment / Produktivbetrieb](#10-deployment--produktivbetrieb)
+1. [Verfügbare Original-Sticker (Preis VB)](#1-verfügbare-original-sticker-preis-vb)
+2. [Verkaufskonditionen, Übergabe in Augsburg & Versand](#2-verkaufskonditionen-übergabe-in-augsburg--versand)
+3. [Komplettes GitHub Pages Setup (Schritt-für-Schritt)](#3-komplettes-github-pages-setup-schritt-für-schritt)
+4. [Website lokal auf dem eigenen Rechner testen](#4-website-lokal-auf-dem-eigenen-rechner-testen)
+5. [Projektstruktur](#5-projektstruktur)
+6. [Neue Sticker-Fotos hinzufügen oder Texte ändern](#6-neue-sticker-fotos-hinzufügen-oder-texte-ändern)
 
 ---
 
-## 1. Über das Angebot & Preismodell (VB)
+## 1. Verfügbare Original-Sticker (Preis VB)
 
-- **100 % Verhandlungsbasis (VB):** Alle im Shop genannten Beträge dienen lediglich als unverbindliche Orientierung. Schreib einfach deinen **Wunschpreis** ins Anfrageformular!
-- **Mengenrabatt:** Je mehr Sticker du nimmst (z. B. 100er-, 250er- oder individuelle Großpakete), desto günstiger wird der Stückpreis.
-- **Tausch möglich:** Du hast eigene Augsburg- oder FCA-Sticker zum Tauschen? Gib es einfach im Nachrichtenfeld an.
-- **Outdoor-Qualität:** Hochwertige PVC-/Vinyl-Aufkleber mit UV-Schutzlaminat (glänzend, matt oder Holo-Sonderedition) – wetterfest, farbecht und stark haftend.
+### 1. Ulrich-Biesinger-Tribüne – „Es geht nur gemeinsam“
+![Ulrich-Biesinger-Tribüne Sticker](./assets/stickers/ulrich-biesinger-tribuene.jpg)
+- **Optik:** Dunkelgrün, Weinrot und Weiß mit umlaufendem Doppelrahmen
+- **Preis:** Verhandelbar (VB)
 
----
+### 2. Gruppe Fuggerstadt (GF19)
+![Gruppe Fuggerstadt Sticker](./assets/stickers/gruppe-fuggerstadt.jpg)
+- **Optik:** Breiter Rot-Grün-Weißer Streifenkleber mit Riss-Schriftzug und Zirbelnuss-Wappenmotiv
+- **Preis:** Verhandelbar (VB)
 
-## 2. Aktuelle Sticker-Motive & Mix-Pakete
+### 3. Fuggerstadt – Stadtwappen & Lorbeerkranz
+![Fuggerstadt Stadtwappen Sticker](./assets/stickers/fuggerstadt-wappen.jpg)
+- **Optik:** Tiefschwarzer Streifen-Sticker mit Augsburger Zirbelnuss-Stadtwappen im Lorbeerkranz
+- **Preis:** Verhandelbar (VB)
 
-### Einzelserien (jeweils auch gemischt kombinierbar)
+### 4. LA 07 – Doppeladler & Zirbelnuss
+![LA 07 Doppeladler Sticker](./assets/stickers/la-07-adler.jpg)
+- **Optik:** Weinrot-Grün-Weißer Streifen mit „LA 07“-Schriftzug und Doppeladler inkl. Zirbelnuss-Brustschild
+- **Preis:** Verhandelbar (VB)
 
-| Motiv | Kategorie | Format | Veredelung | Richtwert (VB) |
-| :--- | :--- | :--- | :--- | :--- |
-| **AUX 0821 – Rot-Grün-Weiß** | Kurve & Stadt | 9,5 × 9,5 cm Quadrat | UV-Schutzlack glänzend | ab 5 € VB (25 Stk.) |
-| **Flutlicht am Lech** | Spieltag | 10,5 × 7,4 cm (DIN A7 Quer) | Matt-Laminat kratzfest | ab 6 € VB (25 Stk.) |
-| **Zirbelnuss Wappen Edition** | Tradition | 9,0 cm Rund-Sticker | Chrom- & Glanzfolie | ab 7 € VB (25 Stk.) |
-| **Nordwand & Kurven-Echo** | Kurve & Stadt | 14,8 × 5,2 cm Streifen | Outdoor-Vinyl geschlitzt | ab 6 € VB (25 Stk.) |
-| **Auswärts-Express Schwaben** | Auswärtsfahrt | 10,5 × 7,4 cm (DIN A7 Hoch) | Hochglanz UV-beständig | ab 5 € VB (25 Stk.) |
-| **AUX Street-Tag Holo** | Sonderedition | 8,5 × 5,5 cm | Holografischer Effekt | ab 8 € VB (20 Stk.) |
-
-### Gemischte Sparpakete (Preis verhandelbar)
-
-- **50er Einsteiger-Mix:** Querbeet durch alle aktuellen Augsburg- & FCA-Designs – *Richtwert: 8 € VB*
-- **100er Kurven-Paket:** 100 wetterfeste Sticker inkl. Sondereditionen – *Richtwert: 14 € VB*
-- **250er Szene- & Auswärts-Box:** Großpaket mit starkem Mengenrabatt – *Richtwert: 29 € VB*
-- **Individuelles Wunschpaket:** Freie Stückzahl & Motivauswahl – *Preis komplett nach Absprache (VB)*
+### 5. L A – Doppeladler Klassik
+![LA Doppeladler Sticker](./assets/stickers/la-adler.jpg)
+- **Optik:** Kompakter weinroter Streifen-Aufkleber mit grün-weißer Kante und zentralem Doppeladler
+- **Preis:** Verhandelbar (VB)
 
 ---
 
-## 3. Abholpunkte (Depots) in Augsburg & Versand
+## 2. Verkaufskonditionen, Übergabe in Augsburg & Versand
 
-Um Versandkosten zu sparen, sind unkomplizierte Direktübergaben an folgenden Treffpunkten in Augsburg möglich:
-
-1. **Arena Augsburg (Heimspieltag):** Bürgermeister-Ulrich-Straße / Vorplatz (ab ca. 2 Stunden vor Anpfiff) – *0 € Versandkosten*
-2. **Augsburg Königsplatz / Innenstadt:** Zentraler Treffpunkt (86150 Augsburg) werktags & am Wochenende nach kurzer Absprache – *0 € Versandkosten*
-3. **Augsburg Hauptbahnhof:** Vorplatz / Gleiszugang, optimal für Pendler aus dem Umland oder vor Auswärtsfahrten – *0 € Versandkosten*
-4. **Postversand (Deutschlandweit):** Knicksicher verpackt im Brief- oder Großbriefumschlag innerhalb von 24 Stunden nach Einigung – *ab 1,60 € (bei größeren VB-Paketen oft inklusive)*
+- **100 % Verhandlungsbasis (VB):** Auf der Website können Interessenten ihre gewünschten Motive und Stückzahlen anklicken, ihren **eigenen Wunschpreis (€ VB)** eintragen und die fertige Anfrage direkt kopieren oder in WhatsApp öffnen.
+- **Abholung / Übergabe in Augsburg:** Direktübergabe ohne Versandkosten möglich – z. B. an **FCA-Heimspieltagen an der Arena**, in der **Augsburger Innenstadt / Königsplatz** oder am **Augsburger Hauptbahnhof**.
+- **Postversand:** Deutschlandweiter, knicksicherer Versand im Briefumschlag nach Absprache.
+- **Tausch:** Tauschangebote gegen andere Augsburg- / FCA-Sticker sind jederzeit willkommen.
 
 ---
 
-## 4. Funktionen der Web-Anwendung
+## 3. Komplettes GitHub Pages Setup (Schritt-für-Schritt)
 
-- **Komplett auf Deutsch** im **Rot-Grün-Weiß** Design passend zu Augsburg & dem FCA.
-- **Vektor-Sticker-Vorschau (SVG):** Jedes Motiv wird gestochen scharf direkt im Browser dargestellt.
-- **Kategorie-Filter:** Schnelles Filtern nach *Kurve & Stadt*, *Spieltag*, *Tradition*, *Auswärtsfahrt* und *Sonderedition*.
-- **Interaktives VB-Preisvorschlag-Formular:** Paket oder Einzelmotiv auswählen, Stückzahl & eigenen Wunschpreis (`€ VB`) eintragen, Übergabeort wählen und absenden.
-- **1-Klick Kopiervorlage:** Nach dem Absenden generiert die Seite automatisch einen fertigen Anfrage-Text mit Referenznummer (`AUX-XXXX`) zum direkten Einfügen in WhatsApp, Instagram oder Signal.
-- **Keine externen Abhängigkeiten (Zero-Dependency):** Läuft sofort mit reinem Node.js ohne lange Installationszeiten oder schwere Frameworks.
+Dieses Repository ist vollständig als **statische GitHub Pages Website** aufgebaut (inklusive `.nojekyll`, relativer Dateipfade für Unterverzeichnisse und fertigem GitHub-Actions-Workflow unter `.github/workflows/pages.yml`).
 
----
+### Schritt 1: Änderungen in den `main`-Branch übernehmen
+Stelle sicher, dass der aktuelle Arbeitsstand per Pull Request in den Branch `main` gemergt wurde.
 
-## 5. Komplettes Setup (Schritt-für-Schritt Anleitung)
+### Schritt 2: GitHub Pages in den Repository-Einstellungen aktivieren
+1. Öffne dein Repository auf GitHub: `https://github.com/tegmaram/Yamalsstcikersaux`
+2. Klicke oben rechts auf **Settings** (Einstellungen).
+3. Wähle in der linken Seitenleiste unter *Code and automation* den Punkt **Pages**.
+4. Unter **Build and deployment → Source** hast du zwei Möglichkeiten (beide werden vollständig unterstützt):
+   - **Variante A (Empfohlen – GitHub Actions):** Wähle **GitHub Actions** aus. Die enthaltene Datei `.github/workflows/pages.yml` veröffentlicht die Seite bei jedem Push auf `main` vollautomatisch.
+   - **Variante B (Direkt vom Branch):** Wähle **Deploy from a branch**, setze den Branch auf **`main`** und den Ordner auf **`/ (root)`**, und klicke auf **Save**.
 
-### Voraussetzungen
+### Schritt 3: Fertige Live-Website aufrufen
+Nach ca. 30–60 Sekunden ist deine Sticker-Verkaufsseite dauerhaft und kostenlos erreichbar unter:
 
-Stelle sicher, dass folgende Programme auf deinem System installiert sind:
-
-- **Node.js** in Version **20.0.0 oder neuer** (empfohlen: Node 20 LTS oder Node 22 LTS)
-- **Git** zum Klonen des Repositories
-
-Prüfe deine installierte Node-Version im Terminal:
-
-```bash
-node -v
-npm -v
+```text
+https://tegmaram.github.io/Yamalsstcikersaux/
 ```
 
-### Schritt 1: Repository klonen
+---
 
+## 4. Website lokal auf dem eigenen Rechner testen
+
+Da es sich um eine reine HTML/CSS/JavaScript-Website ohne Build-Zwang handelt, kannst du sie auf jedem Computer sofort starten:
+
+### Repository klonen
 ```bash
 git clone https://github.com/tegmaram/Yamalsstcikersaux.git
 cd Yamalsstcikersaux
 ```
 
-### Schritt 2: Umgebungsvariablen einrichten (optional)
-
-Kopiere die mitgelieferte Beispieldatei `.env.example` zu `.env`, falls du Port oder Shop-Texte anpassen möchtest:
-
+### Lokalen Webserver starten (optional für Live-Vorschau)
+Mit Python (auf macOS & Linux vorinstalliert):
 ```bash
-cp .env.example .env
+python3 -m http.server 3000 --bind 0.0.0.0
 ```
-
-Standardwerte (funktionieren auch ohne `.env` sofort):
-
-```env
-HOST=0.0.0.0
-PORT=3000
-SHOP_NAME="Yamal's Stickers AUX"
-CITY="Augsburg (0821 / AUX)"
-```
-
-### Schritt 3: Server starten
-
-Da das Projekt bewusst ohne externe `npm`-Fremdpakete gebaut ist, ist kein `npm install` nötig – du kannst direkt starten!
-
-**Produktionsstart:**
-
+Oder alternativ mit Node.js (`npx`):
 ```bash
-npm start
+npx --yes serve -l 3000 .
 ```
 
-**Entwicklungsmodus (mit automatischem Neustart bei Dateiänderungen):**
-
-```bash
-npm run dev
-```
-
-Öffne anschließend im Browser:
-
+Danach im Browser öffnen:
 ```text
 http://localhost:3000
 ```
 
-*(Falls du einen anderen Port setzen möchtest, z. B. Port 8080: `PORT=8080 npm start`)*
-
 ---
 
-## 6. Projektstruktur im Detail
+## 5. Projektstruktur
 
 ```text
 Yamalsstcikersaux/
-├── .env.example          # Vorlage für Umgebungsvariablen (Port, Shopname, Region)
-├── .gitignore            # Schließt Laufzeitdaten (data/inquiries.json) & Systemdateien aus
-├── README.md             # Vollständige deutsche Dokumentation & Setup-Anleitung
-├── package.json          # Projekt-Konfiguration & Start-/Test-Skripte
-├── data/
-│   ├── catalog.js        # Alle Sticker-Motive, Mix-Pakete (VB) & Augsburger Abhol-Depots
-│   └── inquiries.json    # Automatisch angelegte Speicherdatei für eingehende Preisvorschläge
-├── src/
-│   ├── server.js         # Node.js HTTP-Server & REST-API (lauscht standardmäßig auf 0.0.0.0)
-│   └── store.js          # Geschäftslogik, Validierung & Speicherung von VB-Anfragen
-├── public/
-│   ├── index.html        # Deutsche Weboberfläche im Rot-Grün-Weiß Design
-│   ├── styles.css        # Responsives Layout für Smartphone, Tablet & Desktop
-│   └── app.js            # Katalog-Filter, SVG-Sticker-Renderer & VB-Anfrage-Logik
-└── test/
-    └── server.test.js    # Automatisierte Integrationstests (Node Test-Runner)
+├── .github/
+│   └── workflows/
+│       └── pages.yml                         # Automatisches GitHub Pages Deployment
+├── assets/
+│   └── stickers/                             # Originale Sticker-Produktfotos (optimiert)
+│       ├── fuggerstadt-wappen.jpg            # Motiv: Fuggerstadt Stadtwappen
+│       ├── gruppe-fuggerstadt.jpg            # Motiv: Gruppe Fuggerstadt (GF19)
+│       ├── la-07-adler.jpg                   # Motiv: LA 07 Doppeladler
+│       ├── la-adler.jpg                      # Motiv: L A Doppeladler Klassik
+│       └── ulrich-biesinger-tribuene.jpg     # Motiv: Ulrich-Biesinger-Tribüne
+├── .gitignore                                # Ignoriert temporäre Systemdateien
+├── .nojekyll                                 # Deaktiviert Jekyll auf GitHub Pages
+├── README.md                                 # Komplette deutsche Anleitung & Dokumentation
+├── index.html                                # Hauptseite (Augsburg & FCA Sticker-Verkauf)
+├── styles.css                                # Responsives Design in Rot-Grün-Weiß
+└── app.js                                    # Sticker-Auswahl, Lightbox & VB-Anfrage-Generator
 ```
 
 ---
 
-## 7. Sortiment, Preise & Depots anpassen
+## 6. Neue Sticker-Fotos hinzufügen oder Texte ändern
 
-Alle Daten rund um Sticker, Richtwerte und Übergabeorte liegen zentral und übersichtlich in **`data/catalog.js`**:
+Wenn du später weitere Sticker verkaufen möchtest, geht das in zwei einfachen Schritten:
 
-1. **Neues Sticker-Motiv eintragen:**
-   Öffne `data/catalog.js` und füge ein neues Objekt in das Array `STICKER_MOTIFS` ein (`id`, `name`, `category`, `format`, `finish`, `badgeText`, `subText`, `style`, `guidePrice`, `packSize`, `negotiable: true`).
-2. **Mix-Pakete & Richtwerte ändern:**
-   Passe im Array `BUNDLE_DEALS` die Stückzahlen (`count`) oder Richtwerte (`guidePrice`, z. B. `'12 € VB'`) an.
-3. **Abholpunkte / Depots ändern:**
-   Bearbeite im Array `PICKUP_DEPOTS` die Treffpunkte in Augsburg oder die Versandkonditionen.
-
-Nach dem Speichern von `data/catalog.js` werden Änderungen beim nächsten Seitenaufruf nach einem kurzen Server-Neustart (`npm run dev` erledigt das automatisch) sofort übernommen.
-
----
-
-## 8. REST-API Dokumentation
-
-Der integrierte Server stellt folgende JSON-Schnittstellen bereit:
-
-| Methode | Pfad | Beschreibung |
-| :--- | :--- | :--- |
-| `GET` | `/api/health` | Statusprüfung des Servers inklusive Region & VB-Preismodell |
-| `GET` | `/api/catalog` | Liefert alle Sticker-Motive, Mix-Pakete und Abhol-Depots |
-| `GET` | `/api/inquiries` | Listet gespeicherte Preisvorschläge / Kundenanfragen auf |
-| `POST` | `/api/inquiries` | Nimmt einen neuen VB-Preisvorschlag entgegen und validiert alle Pflichtfelder |
-
-### Beispiel: Preisvorschlag per `curl` absenden
-
-```bash
-curl -X POST http://localhost:3000/api/inquiries \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Lukas",
-    "contact": "@lukas_fca07",
-    "selection": "100er Kurven-Paket (100 Sticker)",
-    "quantity": 100,
-    "offerPrice": 12,
-    "delivery": "arena",
-    "message": "Übergabe vorm Heimspiel am Samstag passt perfekt!"
-  }'
-```
+1. **Foto ablegen:** Speichere das neue Sticker-Foto (am besten im `.jpg`- oder `.png`-Format) im Ordner `assets/stickers/`, z. B. `assets/stickers/neues-motiv.jpg`.
+2. **In `app.js` eintragen:** Öffne die Datei `app.js` und ergänze im Array `STICKERS` ganz oben einen neuen Eintrag:
+   ```js
+   {
+     id: 'neues-motiv',
+     title: 'Name des Stickers',
+     tag: 'Kategorie',
+     image: './assets/stickers/neues-motiv.jpg',
+     description: 'Kurze Beschreibung zum Aufkleber.'
+   }
+   ```
+3. **Commit & Push:** Sobald du die Änderung auf GitHub hochlädst, aktualisiert sich deine GitHub Pages Website automatisch.
 
 ---
 
-## 9. Tests & Qualitätssicherung
-
-Das Repository enthält automatisierte Tests auf Basis des integrierten `node:test`-Runners. Geprüft werden:
-
-- Erreichbarkeit & Health-Check (`/api/health`)
-- Vollständigkeit des Augsburg/FCA-Katalogs & `negotiable: true` (VB) Status
-- Absenden & Speichern gültiger Preisvorschläge (`POST /api/inquiries`)
-- Saubere deutsche Fehlermeldungen bei unvollständigen Eingaben
-- Auslieferung der deutschen Startseite (`GET /`)
-
-**Tests starten:**
-
-```bash
-npm test
-```
-
----
-
-## 10. Deployment / Produktivbetrieb
-
-### Option A: Direkt auf einem Linux-Server / VPS (z. B. mit `pm2` oder `systemd`)
-
-```bash
-PORT=3000 HOST=0.0.0.0 node src/server.js
-```
-
-### Option B: Cloud-Plattformen (Render, Railway, Fly.io, Hetzner)
-
-- **Build Command:** *(leer lassen – keine Build-Abhängigkeiten nötig)*
-- **Start Command:** `npm start`
-- **Port:** wird automatisch aus der Umgebungsvariable `PORT` übernommen.
-- **Persistenz:** Eingehende Anfragen werden lokal unter `data/inquiries.json` abgelegt (bei Container-Hosting empfiehlt sich ein eingebundenes Volume auf `/app/data`).
-
----
-
-**Rot – Grün – Weiß • Augsburg (0821 / AUX) • Alle Preise verhandelbar (VB)!**
+**Augsburg • FCA • Rot-Grün-Weiß – Alle Preise auf Verhandlungsbasis (VB)!**
