@@ -49,7 +49,6 @@ const els = {
   selectedList: document.getElementById('selected-list'),
   navCount: document.getElementById('nav-count'),
   selectAllHero: document.getElementById('select-all-hero'),
-  addAllBtn: document.getElementById('add-all-btn'),
   clearBtn: document.getElementById('clear-selection-btn'),
   offerPrice: document.getElementById('offer-price'),
   offerDelivery: document.getElementById('offer-delivery'),
@@ -82,13 +81,34 @@ function getTotalCount() {
 }
 
 function setQty(id, nextQty) {
-  const clean = Math.max(0, Math.min(500, Math.round(nextQty)));
+  const clean = Math.max(0, Math.min(2000, Math.round(nextQty)));
   if (clean === 0) {
     selection.delete(id);
   } else {
     selection.set(id, clean);
   }
   renderAll();
+}
+
+function renderStepperBar(id, qty) {
+  const safeId = escapeHtml(id);
+  const disableMinus = qty === 0 ? 'disabled' : '';
+
+  return `
+    <div class="qty-controls" role="group" aria-label="Stückzahl wählen">
+      <div class="qty-group">
+        <button type="button" class="qty-btn is-minus" data-id="${safeId}" data-step="-30" ${disableMinus} aria-label="30 weniger">−30</button>
+        <button type="button" class="qty-btn is-minus" data-id="${safeId}" data-step="-10" ${disableMinus} aria-label="10 weniger">−10</button>
+        <button type="button" class="qty-btn is-minus" data-id="${safeId}" data-step="-1" ${disableMinus} aria-label="1 weniger">−1</button>
+      </div>
+      <span class="qty-value">${qty}×</span>
+      <div class="qty-group">
+        <button type="button" class="qty-btn is-plus" data-id="${safeId}" data-step="1" aria-label="1 mehr">+1</button>
+        <button type="button" class="qty-btn is-plus" data-id="${safeId}" data-step="10" aria-label="10 mehr">+10</button>
+        <button type="button" class="qty-btn is-plus" data-id="${safeId}" data-step="30" aria-label="30 mehr">+30</button>
+      </div>
+    </div>
+  `;
 }
 
 function openLightbox(src, caption) {
@@ -126,51 +146,20 @@ function renderStickerCards() {
           <p>${escapeHtml(s.description)}</p>
 
           <div class="sticker-footer">
-            <div class="vb-label">
-              <strong>Preis verhandelbar (VB)</strong>
-              <span>Einzeln oder mehrere verfügbar</span>
+            <div class="sticker-footer-top">
+              <div class="vb-label">
+                <strong>Preis verhandelbar (VB)</strong>
+                <span>Einzeln oder größere Mengen wählbar</span>
+              </div>
+              ${qty > 0 ? `<span class="selected-pill">${qty} Stk. gewählt</span>` : ''}
             </div>
 
-            ${
-              qty === 0
-                ? `<button type="button" class="btn btn-primary btn-sm add-first-btn" data-id="${escapeHtml(s.id)}">
-                     + Auswählen
-                   </button>`
-                : `<div class="qty-controls" aria-label="Stückzahl anpassen">
-                     <button type="button" class="qty-btn dec-btn" data-id="${escapeHtml(s.id)}" aria-label="Weniger">−</button>
-                     <span class="qty-value">${qty}×</span>
-                     <button type="button" class="qty-btn inc-btn" data-id="${escapeHtml(s.id)}" aria-label="Mehr">+</button>
-                   </div>`
-            }
+            ${renderStepperBar(s.id, qty)}
           </div>
         </div>
       </article>
     `;
   }).join('');
-
-  els.grid.querySelectorAll('.sticker-photo-wrap').forEach((wrap) => {
-    wrap.addEventListener('click', () => {
-      openLightbox(wrap.dataset.zoomSrc, wrap.dataset.zoomTitle);
-    });
-  });
-
-  els.grid.querySelectorAll('.add-first-btn').forEach((btn) => {
-    btn.addEventListener('click', () => setQty(btn.dataset.id, 1));
-  });
-
-  els.grid.querySelectorAll('.inc-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.id;
-      setQty(id, (selection.get(id) || 0) + 1);
-    });
-  });
-
-  els.grid.querySelectorAll('.dec-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.id;
-      setQty(id, (selection.get(id) || 0) - 1);
-    });
-  });
 }
 
 function renderSelectedList() {
@@ -185,8 +174,8 @@ function renderSelectedList() {
   if (selection.size === 0) {
     els.selectedList.innerHTML = `
       <div class="empty-selection">
-        Noch keine Sticker ausgewählt. Klicke oben bei den gewünschten Motiven auf <strong>„+ Auswählen“</strong>
-        oder wähle direkt alle 5 Motive als Set.
+        Noch keine Sticker ausgewählt. Nutze oben bei den Motiven die Buttons
+        <strong>+1 / +10 / +30</strong> oder wähle unten alle 5 Motive auf einmal.
       </div>
     `;
     return;
@@ -201,29 +190,11 @@ function renderSelectedList() {
             <img src="${escapeHtml(s.image)}" alt="" class="selected-thumb" />
             <span class="selected-title">${escapeHtml(s.title)}</span>
           </div>
-          <div class="qty-controls">
-            <button type="button" class="qty-btn sel-dec" data-id="${escapeHtml(s.id)}" aria-label="Weniger">−</button>
-            <span class="qty-value">${qty}×</span>
-            <button type="button" class="qty-btn sel-inc" data-id="${escapeHtml(s.id)}" aria-label="Mehr">+</button>
-          </div>
+          ${renderStepperBar(s.id, qty)}
         </div>
       `;
     })
     .join('');
-
-  els.selectedList.querySelectorAll('.sel-inc').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.id;
-      setQty(id, (selection.get(id) || 0) + 1);
-    });
-  });
-
-  els.selectedList.querySelectorAll('.sel-dec').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.id;
-      setQty(id, (selection.get(id) || 0) - 1);
-    });
-  });
 }
 
 function buildInquiryMessage() {
@@ -231,9 +202,10 @@ function buildInquiryMessage() {
     (s) => `• ${selection.get(s.id)}× ${s.title}`
   );
 
+  const total = getTotalCount();
   const itemsBlock =
     chosenLines.length > 0
-      ? chosenLines.join('\n')
+      ? `${chosenLines.join('\n')}\nGesamtmenge: ${total} Sticker`
       : '• Interesse an Augsburg / FCA Stickern (bitte verfügbare Menge mitteilen)';
 
   const rawPrice = els.offerPrice.value.trim();
@@ -271,6 +243,32 @@ function renderAll() {
   updateMessagePreview();
 }
 
+// Event-Delegation für Karten-Galerie (+1/+10/+30, -1/-10/-30 & Lightbox)
+els.grid.addEventListener('click', (e) => {
+  const stepBtn = e.target.closest('[data-step]');
+  if (stepBtn && !stepBtn.disabled) {
+    const id = stepBtn.dataset.id;
+    const delta = Number(stepBtn.dataset.step);
+    setQty(id, (selection.get(id) || 0) + delta);
+    return;
+  }
+
+  const photoWrap = e.target.closest('.sticker-photo-wrap');
+  if (photoWrap) {
+    openLightbox(photoWrap.dataset.zoomSrc, photoWrap.dataset.zoomTitle);
+  }
+});
+
+// Event-Delegation für Merkliste (+1/+10/+30 & -1/-10/-30)
+els.selectedList.addEventListener('click', (e) => {
+  const stepBtn = e.target.closest('[data-step]');
+  if (stepBtn && !stepBtn.disabled) {
+    const id = stepBtn.dataset.id;
+    const delta = Number(stepBtn.dataset.step);
+    setQty(id, (selection.get(id) || 0) + delta);
+  }
+});
+
 // Event-Listener für Hero-Fotos (Lightbox)
 document.querySelectorAll('[data-lightbox]').forEach((img) => {
   img.addEventListener('click', () => {
@@ -286,20 +284,26 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !els.lightbox.hidden) closeLightbox();
 });
 
-// Alle 5 Motive auswählen
-function addOneOfEach() {
+// Alle 5 Motive gleichzeitig erhöhen (+1 / +10 / +30)
+function addBulkToAll(step) {
   for (const s of STICKERS) {
-    selection.set(s.id, (selection.get(s.id) || 0) + 1);
+    const next = Math.max(0, Math.min(2000, (selection.get(s.id) || 0) + step));
+    if (next === 0) selection.delete(s.id);
+    else selection.set(s.id, next);
   }
   renderAll();
 }
 
 els.selectAllHero.addEventListener('click', () => {
-  if (selection.size === 0) addOneOfEach();
+  if (selection.size === 0) addBulkToAll(1);
   document.getElementById('anfrage').scrollIntoView({ behavior: 'smooth' });
 });
 
-els.addAllBtn.addEventListener('click', addOneOfEach);
+document.querySelectorAll('.bulk-add-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    addBulkToAll(Number(btn.dataset.bulkStep) || 1);
+  });
+});
 
 els.clearBtn.addEventListener('click', () => {
   selection.clear();
@@ -320,7 +324,6 @@ els.copyBtn.addEventListener('click', async () => {
       els.copyStatus.hidden = true;
     }, 2200);
   } catch {
-    // Fallback für ältere Browser
     const range = document.createRange();
     range.selectNodeContents(els.messagePreview);
     const sel = window.getSelection();
