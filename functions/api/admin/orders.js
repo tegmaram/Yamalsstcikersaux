@@ -3,8 +3,30 @@ function isAuthorized(request, env) {
   const jwt = request.headers.get("Cf-Access-Jwt-Assertion");
   if (jwt) return true;
   const token = request.headers.get("X-Admin-Token");
-  if (env.ADMIN_TOKEN && token && token === env.ADMIN_TOKEN) return true;
+  if (env.ADMIN_TOKEN && token && timingSafeEqual(token, env.ADMIN_TOKEN)) return true;
   return false;
+}
+
+function timingSafeEqual(a, b) {
+  if (typeof a !== "string" || typeof b !== "string") return false;
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+async function adminRateLimit(env, ip) {
+  const key = `rl:admin:${ip}`;
+  const now = Math.floor(Date.now() / 1000);
+  const windowSec = 900;
+  const limit = 10;
+  const raw = await env.RATE_LIMIT.get(key);
+  let entry = raw ? JSON.parse(raw) : null;
+  if (!entry || entry.reset_at <= now) entry = { count: 0, reset_at: now + windowSec };
+  if (entry.count >= limit) return { ok: false, retryAfter: entry.reset_at - now };
+  entry.count += 1;
+  await env.RATE_LIMIT.put(key, JSON.stringify(entry), { expirationTtl: windowSec });
+  return { ok: true };
 }
 
 function json(data, status = 200) {
@@ -15,6 +37,9 @@ function json(data, status = 200) {
 }
 
 export async function onRequest({ request, env }) {
+  const ip = request.headers.get("CF-Connecting-IP") || "";
+  const rl = await adminRateLimit(env, ip);
+  if (!rl.ok) return json({ error: "rate_limited", retryAfter: rl.retryAfter }, 429);
   if (!isAuthorized(request, env)) return json({ error: "unauthorized" }, 401);
 
   const url = new URL(request.url);
