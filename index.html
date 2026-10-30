@@ -256,6 +256,46 @@
     </section>
   </main>
 
+  <section class="order-section" id="order">
+    <div class="container">
+      <h2>Bestellung / Anfrage (VB)</h2>
+      <p class="order-hint">Wähle Motive und Mengen, gib deinen Wunschpreis und Kontakt an. Wir melden uns für einen Treffpunkt in Augsburg.</p>
+      <form id="order-form">
+        <div class="form-row">
+          <label>Gewünschte Motive &amp; Mengen</label>
+          <div id="sticker-picker" class="sticker-picker">Lade Sticker…</div>
+        </div>
+        <div class="form-row">
+          <label for="order-price">Wunschpreis (€, VB)</label>
+          <input type="number" id="order-price" name="price" min="0" step="0.5" placeholder="z.B. 5.00" />
+        </div>
+        <div class="form-row">
+          <label for="order-contact">Kontakt (WhatsApp/IG/Email)</label>
+          <input type="text" id="order-contact" name="contact" maxlength="200" placeholder="z.B. @name oder E-Mail" />
+        </div>
+        <div class="form-row">
+          <label for="order-message">Nachricht (optional)</label>
+          <textarea id="order-message" name="message" rows="3" maxlength="2000"></textarea>
+        </div>
+
+        <!-- Honeypot (hidden) -->
+        <div style="position:absolute;left:-9999px;" aria-hidden="true">
+          <input type="text" name="website" id="hp-website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="human-verify">
+          <p class="hv-title">Bist du ein Mensch?</p>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAAFs5U0TgpIYQL2kq" data-theme="light"></div>
+          <p class="hv-disclose">wenn du ja drückst, dann nehmen wir das von dir</p>
+          <p class="hv-small">Wir speichern: IP-Adresse, Zeitpunkt, Browser/Gerät, Referrer, deine Eingaben (Motiv, Menge, Preis, Kontakt, Nachricht). Nur zur Bearbeitung deiner Anfrage. Keine Weitergabe. Löschung auf Anfrage.</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="order-submit">Anfrage senden</button>
+        <p id="order-status" class="order-status" role="status"></p>
+      </form>
+    </div>
+  </section>
+
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
@@ -277,6 +317,82 @@
     <p id="lightbox-caption" class="lightbox-caption"></p>
   </div>
 
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="./app.js"></script>
+  <script>
+    (function () {
+      const form = document.getElementById('order-form');
+      const status = document.getElementById('order-status');
+      const submitBtn = document.getElementById('order-submit');
+      const picker = document.getElementById('sticker-picker');
+      const formTs = Date.now();
+      if (!form) return;
+
+      // Load stickers from API and render picker
+      fetch('/api/stickers').then(r => r.json()).then(data => {
+        picker.innerHTML = '';
+        (data.stickers || []).forEach(s => {
+          const row = document.createElement('div');
+          row.className = 'picker-row' + (s.available ? '' : ' out');
+          row.innerHTML = '<label><input type="checkbox" class="pick-cb" data-id="' + s.id + '" ' + (s.available ? '' : 'disabled') + '> ' + escapeHtml(s.title) + (s.available ? '' : ' (ausverkauft)') + '</label>' +
+            '<input type="number" class="pick-qty" data-id="' + s.id + '" min="1" max="999" value="1" ' + (s.available ? '' : 'disabled') + '>';
+          picker.appendChild(row);
+        });
+        if (!(data.stickers || []).length) picker.textContent = 'Keine Sticker verfügbar.';
+      }).catch(() => { picker.textContent = 'Sticker konnten nicht geladen werden.'; });
+
+      function escapeHtml(str) {
+        return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        status.textContent = '';
+        submitBtn.disabled = true;
+        const tsToken = (window.turnstile && turnstile.getResponse && turnstile.getResponse()) || '';
+        const items = [];
+        picker.querySelectorAll('.pick-cb:checked').forEach(cb => {
+          const id = cb.getAttribute('data-id');
+          const qtyInput = picker.querySelector('.pick-qty[data-id="' + id + '"]');
+          const qty = parseInt(qtyInput && qtyInput.value, 10) || 1;
+          items.push({ id, qty });
+        });
+        if (!items.length) {
+          status.textContent = 'Bitte mindestens ein Motiv auswählen.';
+          submitBtn.disabled = false;
+          return;
+        }
+        const payload = {
+          items: items,
+          offeredPrice: document.getElementById('order-price').value || null,
+          contact: document.getElementById('order-contact').value,
+          message: document.getElementById('order-message').value,
+          turnstileToken: tsToken,
+          website: document.getElementById('hp-website').value,
+          formTs: formTs,
+        };
+        try {
+          const res = await fetch('/api/order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json();
+          if (res.ok && data.ok) {
+            status.textContent = 'Danke! Anfrage gesendet (ID: ' + data.orderId + '). Wir melden uns.';
+            form.reset();
+            if (window.turnstile) turnstile.reset();
+          } else {
+            status.textContent = 'Fehler: ' + (data.error || res.status);
+            if (window.turnstile) turnstile.reset();
+          }
+        } catch (err) {
+          status.textContent = 'Netzwerkfehler. Bitte erneut versuchen.';
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

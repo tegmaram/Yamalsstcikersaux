@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "yamalsstickers",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-23",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "yamals-stickers-db",
+      "database_id": "131443d5-fcb4-49e1-b1df-3680da8cb0c0"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "RATE_LIMIT",
+      "id": "d98c0a99fffa4b338b62fea656f9e3fe"
+    }
+  ]
+}
