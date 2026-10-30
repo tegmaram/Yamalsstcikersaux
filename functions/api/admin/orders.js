@@ -37,10 +37,12 @@ function json(data, status = 200) {
 }
 
 export async function onRequest({ request, env }) {
-  const ip = request.headers.get("CF-Connecting-IP") || "";
-  const rl = await adminRateLimit(env, ip);
-  if (!rl.ok) return json({ error: "rate_limited", retryAfter: rl.retryAfter }, 429);
-  if (!isAuthorized(request, env)) return json({ error: "unauthorized" }, 401);
+  if (!isAuthorized(request, env)) {
+    const ip = request.headers.get("CF-Connecting-IP") || "";
+    const rl = await adminRateLimit(env, ip);
+    if (!rl.ok) return json({ error: "rate_limited", retryAfter: rl.retryAfter }, 429);
+    return json({ error: "unauthorized" }, 401);
+  }
 
   const url = new URL(request.url);
   if (request.method === "GET") {
