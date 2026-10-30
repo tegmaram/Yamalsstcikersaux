@@ -742,27 +742,43 @@
 
     async function registerSW() {
       if (!("serviceWorker" in navigator)) throw new Error("Service Worker nicht unterstützt");
-      return navigator.serviceWorker.register("/admin/sw.js", { scope: "/admin/" });
+      const reg = await navigator.serviceWorker.register("/admin/sw.js", { scope: "/admin/" });
+      await navigator.serviceWorker.ready;
+      return reg;
+    }
+
+    // Register SW on load so push can be received even before enabling
+    if ("serviceWorker" in navigator) {
+      registerSW().catch((e) => console.warn("SW reg failed:", e));
     }
 
     async function pushEnable() {
       const msg = document.getElementById("push-msg");
       try {
+        if (!("Notification" in window)) { msg.textContent = "Dieser Browser unterstützt keine Benachrichtigungen."; return; }
         const perm = await Notification.requestPermission();
-        if (perm !== "granted") { msg.textContent = "Benachrichtigungen nicht erlaubt."; return; }
+        if (perm !== "granted") { msg.textContent = "Benachrichtigungen nicht erlaubt (Browser-Einstellungen prüfen)."; return; }
         const reg = await registerSW();
-        await navigator.serviceWorker.ready;
         const publicKey = await getVapidPublicKey();
         if (!publicKey) { msg.textContent = "VAPID key fehlt."; return; }
-        const sub = await reg.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: urlBase64ToUint8Array(publicKey),
-        });
+        let sub;
+        try {
+          sub = await reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(publicKey),
+          });
+        } catch (subErr) {
+          console.error("push subscribe error:", subErr);
+          msg.textContent = "Push-Registrierung fehlgeschlagen: " + (subErr && subErr.message ? subErr.message : subErr) +
+            ". Tipp: Auf Android/Desktop Chrome/Firefox/Edge funktioniert Push direkt; auf iPhone muss die Seite zum Home-Bildschirm hinzugefügt werden.";
+          return;
+        }
         await api("/push", { method: "POST", body: JSON.stringify(sub.toJSON()) });
         msg.textContent = "Push aktiviert.";
         document.getElementById("push-status").innerHTML = '<span class="dot"></span> Aktiv';
       } catch (e) {
-        msg.textContent = "Fehler: " + e.message;
+        console.error("push enable error:", e);
+        msg.textContent = "Fehler: " + (e && e.message ? e.message : e);
       }
     }
 
