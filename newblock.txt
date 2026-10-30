@@ -1,0 +1,40 @@
+          <img class="sticker-thumb" src="${escape(s.image.replace(/^\.\//, '/'))}" alt="" data-zoom="${escape(s.image.replace(/^\.\//, '/'))}" data-title="${escape(s.title)}" style="cursor:zoom-in;" />
+          <div class="sticker-info">
+            <div class="title">${escape(s.title)}</div>
+            <div class="meta">${escape(s.id)} · ${escape(s.tag || '')}</div>
+          </div>
+          <span class="stock-badge ${s.stock > 0 ? 'ok' : 'out'}"><span class="status-dot ${s.stock > 0 ? 'ok' : 'out'}"></span>${s.stock}</span>
+          <div class="stepper">
+            <button class="btn sm" data-step="-30" data-id="${s.id}">-30</button>
+            <button class="btn sm" data-step="-10" data-id="${s.id}">-10</button>
+            <button class="btn sm" data-step="-1" data-id="${s.id}">-1</button>
+            <button class="btn sm" data-step="1" data-id="${s.id}">+1</button>
+            <button class="btn sm" data-step="10" data-id="${s.id}">+10</button>
+            <button class="btn sm" data-step="30" data-id="${s.id}">+30</button>
+          </div>
+          <div class="row-actions">
+            <button class="btn sm ghost" data-act="toggle" data-id="${s.id}" data-active="${s.active}">${s.active ? 'Deaktivieren' : 'Aktivieren'}</button>
+            <button class="btn sm danger" data-act="del" data-id="${s.id}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        `;
+        el.appendChild(div);
+      });
+      // image click -> lightbox
+      el.querySelectorAll('.sticker-thumb').forEach(img => {
+        img.addEventListener('click', () => openLightbox(img.dataset.zoom, img.dataset.title));
+      });
+      // stepper delegation
+      el.querySelectorAll('button[data-step]').forEach(b => b.addEventListener('click', async () => {
+        const id = b.dataset.id;
+        const delta = Number(b.dataset.step);
+        try {
+          await api('/stickers', { method: 'PATCH', body: JSON.stringify({ id, delta }) });
+          await loadStickers();
+        } catch (err) { toast('Fehler: ' + err.message, true); }
+      }));
+      el.querySelectorAll('button[data-act]').forEach(b => b.addEventListener('click', onStickerAction));
+      updateStats();
+    }
+'

@@ -3,6 +3,7 @@ import * as orderMod from "../functions/api/order.js";
 import * as adminStickersMod from "../functions/api/admin/stickers.js";
 import * as adminOrdersMod from "../functions/api/admin/orders.js";
 import * as adminPushMod from "../functions/api/admin/push.js";
+import * as adminTestOrderMod from "../functions/api/admin/test-order.js";
 import * as pushVapidMod from "../functions/api/push/vapid.js";
 import * as authLoginMod from "../functions/api/auth/login.js";
 import * as authCallbackMod from "../functions/api/auth/callback.js";
@@ -86,6 +87,9 @@ export default {
     }
     if (path === "/api/admin/push") {
       if (adminPushMod.onRequest) return adminPushMod.onRequest(ctxObj);
+    }
+    if (path === "/api/admin/test-order") {
+      if (adminTestOrderMod.onRequestPost) return adminTestOrderMod.onRequestPost(ctxObj);
     }
 
     return env.ASSETS.fetch(request);

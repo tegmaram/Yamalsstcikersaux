@@ -299,6 +299,15 @@
       .container { padding: 0 1rem; }
       .topbar-inner { padding: .6rem 1rem; }
     }
+    /* Lightbox */
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.85); display: grid; place-items: center; z-index: 200; }
+    .lightbox[hidden] { display: none; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+    .lightbox-close { position: absolute; top: 1rem; right: 1.5rem; background: transparent; border: none; color: #fff; font-size: 2.5rem; cursor: pointer; line-height: 1; }
+    /* Stepper */
+    .stepper { display: flex; gap: .25rem; flex-wrap: wrap; }
+    .stepper .btn { padding: .25rem .45rem; font-size: .72rem; min-width: 34px; }
+
   </style>
 </head>
 <body>
@@ -445,6 +454,10 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
                   Aktualisieren
                 </button>
+                <button class="btn primary sm" id="test-order-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  Test-Bestellung
+                </button>
               </div>
             </div>
             <div class="order-list" id="orders"><span class="spinner"></span> Lade…</div>
@@ -501,6 +514,11 @@
         </div>
       </div>
     </main>
+  </div>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <img id="lightbox-img" src="" alt="" />
+    <button class="lightbox-close" id="lightbox-close">&times;</button>
   </div>
 
   <div class="toast" id="toast"></div>
@@ -578,6 +596,17 @@
     let allStickers = [];
     let allOrders = [];
 
+    function openLightbox(src, title) {
+      const lb = document.getElementById("lightbox");
+      const img = document.getElementById("lightbox-img");
+      img.src = src; img.alt = title || "";
+      lb.hidden = false;
+    }
+    function closeLightbox() { document.getElementById("lightbox").hidden = true; }
+    document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+    document.getElementById("lightbox").addEventListener("click", (e) => { if (e.target.id === "lightbox") closeLightbox(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
+
     async function loadStickers() {
       const data = await api('/stickers');
       allStickers = data.stickers || [];
@@ -591,18 +620,20 @@
         const div = document.createElement('div');
         div.className = 'sticker-row';
         div.innerHTML = `
-          <img class="sticker-thumb" src="${escape(s.image.replace(/^\.\//, '/'))}" alt="" />
+          <img class="sticker-thumb" src="${escape(s.image.replace(/^\.\//, '/'))}" alt="" data-zoom="${escape(s.image.replace(/^\.\//, '/'))}" data-title="${escape(s.title)}" style="cursor:zoom-in;" />
           <div class="sticker-info">
             <div class="title">${escape(s.title)}</div>
             <div class="meta">${escape(s.id)} · ${escape(s.tag || '')}</div>
           </div>
           <span class="stock-badge ${s.stock > 0 ? 'ok' : 'out'}"><span class="status-dot ${s.stock > 0 ? 'ok' : 'out'}"></span>${s.stock}</span>
-          <button class="btn icon" data-act="minus" data-id="${s.id}" title="-1">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-          <button class="btn icon" data-act="plus" data-id="${s.id}" title="+1">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
+          <div class="stepper">
+            <button class="btn sm" data-step="-30" data-id="${s.id}">-30</button>
+            <button class="btn sm" data-step="-10" data-id="${s.id}">-10</button>
+            <button class="btn sm" data-step="-1" data-id="${s.id}">-1</button>
+            <button class="btn sm" data-step="1" data-id="${s.id}">+1</button>
+            <button class="btn sm" data-step="10" data-id="${s.id}">+10</button>
+            <button class="btn sm" data-step="30" data-id="${s.id}">+30</button>
+          </div>
           <div class="row-actions">
             <button class="btn sm ghost" data-act="toggle" data-id="${s.id}" data-active="${s.active}">${s.active ? 'Deaktivieren' : 'Aktivieren'}</button>
             <button class="btn sm danger" data-act="del" data-id="${s.id}">
@@ -612,8 +643,23 @@
         `;
         el.appendChild(div);
       });
-      el.querySelectorAll('button').forEach(b => b.addEventListener('click', onStickerAction));
+      // image click -> lightbox
+      el.querySelectorAll('.sticker-thumb').forEach(img => {
+        img.addEventListener('click', () => openLightbox(img.dataset.zoom, img.dataset.title));
+      });
+      // stepper delegation
+      el.querySelectorAll('button[data-step]').forEach(b => b.addEventListener('click', async () => {
+        const id = b.dataset.id;
+        const delta = Number(b.dataset.step);
+        try {
+          await api('/stickers', { method: 'PATCH', body: JSON.stringify({ id, delta }) });
+          await loadStickers();
+        } catch (err) { toast('Fehler: ' + err.message, true); }
+      }));
+      el.querySelectorAll('button[data-act]').forEach(b => b.addEventListener('click', onStickerAction));
       updateStats();
+    }
+'      updateStats();
     }
 
     async function onStickerAction(e) {
@@ -712,6 +758,13 @@
 
     document.getElementById('reload-orders').addEventListener('click', () => loadOrders().catch(e => toast(e.message, true)));
     document.getElementById('status-filter').addEventListener('change', () => loadOrders().catch(e => toast(e.message, true)));
+    document.getElementById('test-order-btn').addEventListener('click', async () => {
+      try {
+        const r = await api('/test-order', { method: 'POST' });
+        toast('Test-Bestellung gesendet: ' + r.orderId);
+        await loadOrders();
+      } catch (e) { toast('Fehler: ' + e.message, true); }
+    });
 
     function updateStats() {
       document.getElementById('stat-stickers').textContent = allStickers.filter(s => s.active).length;
