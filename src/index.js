@@ -8,6 +8,7 @@ import * as pushVapidMod from "../functions/api/push/vapid.js";
 import * as authLoginMod from "../functions/api/auth/login.js";
 import * as authCallbackMod from "../functions/api/auth/callback.js";
 import * as authLogoutMod from "../functions/api/auth/logout.js";
+import * as authTokenMod from "../functions/api/auth/token.js";
 
 async function hmacVerify(secret, data, sig) {
   const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["verify"]);
@@ -37,7 +38,15 @@ async function getSessionUser(request, env) {
       } catch (e) {}
     }
   }
-  // 2) Fallback: admin token
+  // 1b) Token cookie (persistent login, no logout on refresh)
+  const tc = cookie.match(/(?:^|;\s*)ys_token=([^;]+)/);
+  if (tc && env.ADMIN_TOKEN) {
+    try {
+      const val = decodeURIComponent(tc[1]);
+      if (val === env.ADMIN_TOKEN) return "token-user";
+    } catch (e) {}
+  }
+  // 2) Fallback: X-Admin-Token header (for curl/API)
   const token = request.headers.get("X-Admin-Token");
   if (env.ADMIN_TOKEN && token && token === env.ADMIN_TOKEN) return "token-user";
   return null;
@@ -54,6 +63,10 @@ export default {
     if (path === "/api/auth/login") return authLoginMod.onRequestGet(ctxObj);
     if (path === "/api/auth/callback") return authCallbackMod.onRequestGet(ctxObj);
     if (path === "/api/auth/logout") return authLogoutMod.onRequestGet(ctxObj);
+    if (path === "/api/auth/token") {
+      if (method === "POST") return authTokenMod.onRequestPost(ctxObj);
+      return authTokenMod.onRequest(ctxObj);
+    }
 
     // Protect /admin and /api/admin
     const isAdminPage = path === "/admin" || path === "/admin/" || path.startsWith("/admin/");

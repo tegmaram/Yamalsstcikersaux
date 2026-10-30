@@ -563,6 +563,8 @@
     async function tryUnlock(token) {
       setToken(token);
       try {
+        // set persistent cookie so user stays logged in
+        await fetch("/api/auth/token", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token }) });
         await api('/stickers');
         showPanel();
         await refreshAll();
