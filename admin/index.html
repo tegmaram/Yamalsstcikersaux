@@ -590,7 +590,7 @@
         const div = document.createElement('div');
         div.className = 'sticker-row';
         div.innerHTML = `
-          <img class="sticker-thumb" src="${escape(s.image)}" alt="" />
+          <img class="sticker-thumb" src="${escape(s.image.replace(/^\.\//, '/'))}" alt="" />
           <div class="sticker-info">
             <div class="title">${escape(s.title)}</div>
             <div class="meta">${escape(s.id)} · ${escape(s.tag || '')}</div>
