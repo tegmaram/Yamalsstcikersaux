@@ -12,7 +12,8 @@ export async function onRequestGet({ request, env }) {
 
   const clientId = env.GITHUB_CLIENT_ID;
   const clientSecret = env.GITHUB_CLIENT_SECRET;
-  const allowedUser = (env.ALLOWED_GITHUB_USER || "").toLowerCase();
+  const allowedRaw = (env.ALLOWED_GITHUB_USER || "").toLowerCase();
+  const allowedUsers = allowedRaw.split(",").map((s) => s.trim()).filter(Boolean);
   const sessionSecret = env.SESSION_SECRET;
   if (!clientId || !clientSecret || !sessionSecret) {
     return new Response("Auth not configured (missing secrets)", { status: 500 });
@@ -37,7 +38,7 @@ export async function onRequestGet({ request, env }) {
   if (!user || !user.login) {
     return new Response("Failed to fetch user", { status: 400 });
   }
-  if (allowedUser && user.login.toLowerCase() !== allowedUser && String(user.id) !== allowedUser) {
+  if (allowedUsers.length && !allowedUsers.includes(user.login.toLowerCase()) && !allowedUsers.includes(String(user.id))) {
     return new Response("Access denied: GitHub user '" + user.login + "' is not allowed.", { status: 403 });
   }
 
