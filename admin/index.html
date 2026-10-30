@@ -306,9 +306,16 @@
   <div class="lock" id="lock">
     <div class="lock-card">
       <h2>Admin-Zugang</h2>
-      <p>Geschützt. Token eingeben oder Cloudflare Access nutzen.</p>
-      <input type="password" id="token-input" placeholder="Admin-Token" autocomplete="off" />
-      <button class="btn primary" id="unlock-btn" style="width:100%;margin-top:.75rem;">Entsperren</button>
+      <p>Geschützt via GitHub OAuth (nur dein Account) oder Admin-Token.</p>
+      <a class="btn primary" href="/api/auth/login" style="width:100%;margin-bottom:.75rem;text-decoration:none;">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        Mit GitHub anmelden
+      </a>
+      <details style="margin-top:.75rem;">
+        <summary style="cursor:pointer;color:var(--muted);font-size:.8rem;">oder Token eingeben</summary>
+        <input type="password" id="token-input" placeholder="Admin-Token" autocomplete="off" style="margin-top:.5rem;" />
+        <button class="btn ghost" id="unlock-btn" style="width:100%;margin-top:.5rem;">Entsperren</button>
+      </details>
       <div class="lock-msg" id="lock-msg"></div>
     </div>
   </div>
@@ -561,8 +568,9 @@
     document.getElementById('token-input').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') document.getElementById('unlock-btn').click();
     });
-    document.getElementById('logout-btn').addEventListener('click', () => {
-      clearToken(); showLock('Abgemeldet.');
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      clearToken();
+      window.location.href = "/api/auth/logout";
     });
 
     document.querySelectorAll('.tab').forEach(tab => {
@@ -827,7 +835,22 @@
     setInterval(pollOrders, 30000);
     setTimeout(pollOrders, 5000);
 
-    if (getToken()) { tryUnlock(getToken()); }
+    async function tryAccess() {
+      try {
+        await api('/stickers');
+        showPanel();
+        await refreshAll();
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    if (getToken()) {
+      tryUnlock(getToken());
+    } else {
+      tryAccess().then((ok) => { if (!ok) showLock(''); });
+    }
   </script>
 </body>
 </html>
