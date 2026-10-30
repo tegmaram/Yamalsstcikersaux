@@ -48,3 +48,7 @@ Add a GitHub Action using cloudflare/wrangler-action with CLOUDFLARE_API_TOKEN s
 ## Telegram chat id
 Send a message to your bot, then:
 https://api.telegram.org/bot<TOKEN>/getUpdates  → read chat.id
+
+## Live URLs (updated)
+- Site: https://yamalsstickers.yamalsticker.workers.dev
+- Admin: https://yamalsstickers.yamalsticker.workers.dev/admin/
