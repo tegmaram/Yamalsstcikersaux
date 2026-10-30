@@ -1,3 +1,5 @@
+import webpush from "web-push";
+
 // POST /api/order
 
 const OrderSchema = {
@@ -64,28 +66,36 @@ async function rateLimit(env, ip) {
   return { ok: true };
 }
 
-async function notifyTelegram(env, order) {
-  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return;
-  const text = [
-    "🛒 *Neue Bestellung*",
-    `ID: \`${order.id}\``,
-    `Zeit: ${order.created_at}`,
-    `IP: ${order.ip} (${order.country || "?"})`,
-    `UA: ${order.user_agent}`,
-    `Referrer: ${order.referrer || "-"}`,
-    `Sprache: ${order.lang || "-"}`,
-    `Angebotener Preis: ${order.offered_price == null ? "VB" : order.offered_price + " €"}`,
-    `Kontakt: ${order.contact || "-"}`,
-    `Nachricht: ${order.message || "-"}`,
-    `Artikel: ${JSON.stringify(order.items)}`,
-  ].join("\n");
-  await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text, parse_mode: "Markdown" }),
-  }).catch(() => {});
-}
+async function notifyPush(env, order) {
+  if (!env.VAPID_PUBLIC_KEY || !env.VAPID_PRIVATE_KEY || !env.VAPID_SUBJECT) return;
+  let subs;
+  try {
+    const { results } = await env.DB.prepare("SELECT endpoint, p256dh, auth FROM push_subscriptions").all();
+    subs = results || [];
+  } catch { return; }
+  if (!subs.length) return;
 
+  webpush.setVapidDetails(env.VAPID_SUBJECT, env.VAPID_PUBLIC_KEY, env.VAPID_PRIVATE_KEY);
+
+  const payload = JSON.stringify({
+    title: "Neue Bestellung",
+    body: (order.items.length + " Artikel · " + (order.offered_price == null ? "VB" : order.offered_price + " EUR") + " · " + (order.contact || "kein Kontakt")),
+    url: "/admin/?tab=orders",
+    orderId: order.id,
+  });
+
+  await Promise.allSettled(subs.map(async (s) => {
+    const subscription = { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } };
+    try {
+      await webpush.sendNotification(subscription, payload);
+      await env.DB.prepare("UPDATE push_subscriptions SET last_used = ? WHERE endpoint = ?").bind(new Date().toISOString(), s.endpoint).run();
+    } catch (err) {
+      if (err && (err.statusCode === 404 || err.statusCode === 410)) {
+        await env.DB.prepare("DELETE FROM push_subscriptions WHERE endpoint = ?").bind(s.endpoint).run();
+      }
+    }
+  }));
+}
 async function notifyEmail(env, order) {
   if (!env.RESEND_API_KEY || !env.NOTIFY_EMAIL) return;
   await fetch("https://api.resend.com/emails", {
@@ -190,7 +200,7 @@ export async function onRequestPost({ request, env }) {
     .run();
 
   // fire-and-forget notifications
-  await Promise.allSettled([notifyTelegram(env, order), notifyEmail(env, order)]);
+  await Promise.allSettled([notifyPush(env, order), notifyEmail(env, order)]);
 
   return json({ ok: true, orderId: id });
 }
