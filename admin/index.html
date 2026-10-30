@@ -810,6 +810,23 @@
       } catch (e) { msg.textContent = "Fehler: " + e.message; }
     });
 
+    // ---------- Polling fallback (works in any browser) ----------
+    let lastOrderCount = 0;
+    async function pollOrders() {
+      try {
+        const data = await api("/orders?status=new");
+        const n = (data.orders || []).length;
+        if (n > lastOrderCount && lastOrderCount !== 0) {
+          toast("Neue Bestellung! (" + n + " neu)", false);
+          try { document.title = "(" + n + ") Admin – Yamal's Stickers AUX"; } catch (e) {}
+        }
+        lastOrderCount = n;
+        document.getElementById("stat-new").textContent = n;
+      } catch (e) {}
+    }
+    setInterval(pollOrders, 30000);
+    setTimeout(pollOrders, 5000);
+
     if (getToken()) { tryUnlock(getToken()); }
   </script>
 </body>
