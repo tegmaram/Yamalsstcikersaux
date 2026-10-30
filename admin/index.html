@@ -55,10 +55,22 @@
 
   <script>
     const API = '/api/admin';
+    const TOKEN_KEY = 'yamal_admin_token';
+    function getToken() { return localStorage.getItem(TOKEN_KEY) || ''; }
+    function setToken(t) { localStorage.setItem(TOKEN_KEY, t); }
     async function api(path, opts = {}) {
-      const res = await fetch(API + path, { ...opts, headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) } });
+      const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+      const t = getToken();
+      if (t) headers['X-Admin-Token'] = t;
+      const res = await fetch(API + path, { ...opts, headers });
       if (!res.ok) throw new Error(await res.text());
       return res.json();
+    }
+
+    // token gate
+    if (!getToken()) {
+      const t = prompt('Admin-Token eingeben:');
+      if (t) setToken(t.trim());
     }
 
     async function loadStickers() {

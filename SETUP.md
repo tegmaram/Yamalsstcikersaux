@@ -1,6 +1,14 @@
 # Setup — Cloudflare (Phase 1+2)
 
-## Secrets (run in project folder)
+## Temporary admin token (for testing)
+```
+tmp-admin-02065ecbd40f
+```
+Use via header `X-Admin-Token: tmp-admin-02065ecbd40f` or in the admin panel (not yet wired — for now use curl/API).  
+Replace with Cloudflare Access + a strong `ADMIN_TOKEN` before going live. To remove the temp token later:
+```powershell
+wrangler secret delete ADMIN_TOKEN
+```
 ```powershell
 # Telegram (create bot via @BotFather, get token + your chat id)
 "YOUR_BOT_TOKEN" | wrangler secret put TELEGRAM_BOT_TOKEN
